@@ -1,13 +1,13 @@
-from django.db.models import QuerySet
-from django.db import transaction
 from db.models import Movie
+from django.db import transaction
+from django.db.models import QuerySet
 
 
 def get_movies(
         title: str = None,
         genres_ids: list[int] = None,
         actors_ids: list[int] = None,
-) -> QuerySet[Movie]:
+) -> QuerySet[Movie]:  # Уточнено тип QuerySet[Movie]
     queryset = Movie.objects.all()
 
     if title:

@@ -6,8 +6,10 @@ from django.db.models import QuerySet
 
 @transaction.atomic
 def create_order(
-        tickets: list[dict], username: str, date: str = None
-) -> Order:
+        tickets: list[dict],
+        username: str,
+        date: str = None,
+) -> Order:  # Кожен аргумент на новому рядку (Пункт 7)
     user = get_user_model().objects.get(username=username)
     order = Order.objects.create(user=user)
 

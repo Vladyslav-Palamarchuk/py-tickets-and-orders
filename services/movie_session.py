@@ -1,11 +1,12 @@
-from django.db.models import QuerySet
-
 from db.models import MovieSession, Ticket
+from django.db.models import QuerySet
 
 
 def create_movie_session(
-        movie_show_time: str, movie_id: int, cinema_hall_id: int
-) -> MovieSession:
+        movie_show_time: str,
+        movie_id: int,
+        cinema_hall_id: int,
+) -> MovieSession:  # Кожен аргумент на новому рядку (Пункт 7)
     return MovieSession.objects.create(
         show_time=movie_show_time,
         movie_id=movie_id,
@@ -13,8 +14,9 @@ def create_movie_session(
     )
 
 
-def get_movies_sessions(session_date: str = None) \
-        -> QuerySet[MovieSession]:
+def get_movies_sessions(
+        session_date: str = None,
+) -> QuerySet[MovieSession]:  # Типізація QuerySet[MovieSession]
     queryset = MovieSession.objects.all()
     if session_date:
         queryset = queryset.filter(show_time__date=session_date)
