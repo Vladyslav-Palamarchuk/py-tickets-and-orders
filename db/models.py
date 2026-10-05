@@ -98,16 +98,6 @@ class Ticket(models.Model):
     def clean(self) -> None:
         super().clean()
 
-        # Перевірка на унікальність місця на сеансі
-        ticket_exists = Ticket.objects.filter(
-            movie_session=self.movie_session, row=self.row, seat=self.seat
-        ).exclude(pk=self.pk).exists()
-
-        if ticket_exists:
-            raise ValidationError({
-                "seat": ["This seat is already taken for this movie session."]
-            })
-
         cinema_hall = self.movie_session.cinema_hall
 
         if not (1 <= self.row <= cinema_hall.rows):
