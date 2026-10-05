@@ -1,5 +1,8 @@
-from db.models import User
+from typing import TYPE_CHECKING
 from django.contrib.auth import get_user_model
+
+if TYPE_CHECKING:
+    from db.models import User
 
 UserModel = get_user_model()
 
@@ -10,8 +13,7 @@ def create_user(
         email: str = None,
         first_name: str = None,
         last_name: str = None,
-) -> User:
-
+) -> "User":
     extra_fields = {}
 
     if email:
@@ -26,8 +28,7 @@ def create_user(
     )
 
 
-def get_user(user_id: int) -> User:
-    """Отримує одного користувача за його унікальним ідентифікатором (id)."""
+def get_user(user_id: int) -> "User":
     return UserModel.objects.get(id=user_id)
 
 
@@ -38,12 +39,8 @@ def update_user(
         email: str = None,
         first_name: str = None,
         last_name: str = None,
-) -> User:
-    """Оновлює дані існуючого користувача.
-
-    Якщо передано новий пароль, він коректно шифрується через set_password.
-    """
-    user = UserModel.objects.get(id=user_id)
+) -> "User":
+    user = get_user(user_id)
 
     if username:
         user.username = username
